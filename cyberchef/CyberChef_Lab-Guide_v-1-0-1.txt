@@ -1,0 +1,492 @@
+******************************
+***** CyberChef Workshop *****
+******************************
+******* Version: 1.0.1 *******
+******************************
+***** -By: Matt Scheurer *****
+******************************
+****** Twitter: @c3rkah ******
+******************************
+
+
+******************************
+******** Introduction ********
+******************************
+
+What is CyberChef?
+
+CyberChef is a simple, intuitive web app for analyzing and decoding data without having to deal with complex tools or programming languages. CyberChef encourages both technical and non-technical people to explore data formats, encryption and compression. There are around 200 useful operations in CyberChef for anyone working on anything vaguely Internet-related, whether you just want to convert a timestamp to a different format, decompress gzipped data, create a SHA3 hash, or parse an X.509 certificate to find out who issued it.
+
+It’s the Cyber Swiss Army Knife.
+
+
+******************************
+******** Exercise 00: ********
+******************************
+
+Accessing and Navigating CyberChef
+----------------------------------
+
+Objective: Learn about the various components of the CyberChef platform.
+
+Step 1) Open CyberChef in your browser at the following address...
+
+https://gchq.github.io/CyberChef/
+
+Step 2) Let's take a moment to familiarize ourselves with the CyberChef interface, which has the following components...
+
+Operations: the actions you want to use in building your recipe
+Recipe: the top-down list of operations to be carried out, which pipes output from one operation to the next
+BAKE!: executes the recipe (Strongly recommended to uncheck "Auto Bake" for this lab!)
+Input: the folder, file, or freely copied text to be processed
+Output: the results of the Input and Recipe, after BAKE! is initiated
+
+
+******************************
+******** Exercise 01: ********
+******************************
+
+Our first recipe
+----------------
+
+Objective: Convert an unknown numeric string to human readable output.
+
+Copy and paste the following string to the CyberChef Input:
+
+104 145 143 157 144 145 144 40 152 165 163 164 40 154 151 153 145 40 155 141 147 151 143 41
+
+Verify that the "Auto Bake" box is unchecked, or uncheck the box if it wasn't already unchecked.
+
+In Operations, search for "Comment" then drag and drop that into our Recipe.
+
+Add the following Comment:
+
+Our first CyberChef Recipe
+
+Back in Operations, search for "Magic" then drag and drop that below Comment in our Recipe.
+
+Click the "BAKE!" button.
+
+Look at the Output and then click on "From_Octal('Space')".
+
+Click the "BAKE!" button again.
+
+Our Output should read "Decoded just like magic!"
+
+
+******************************
+******** Exercise 02: ********
+******************************
+
+Epoch Time Conversion
+---------------------
+
+Objective: Convert a sample Unix Epoch time string to a human readable timestamp in Eastern Standard Time (EST).
+
+Background: Unix time (also known as Epoch time, POSIX time, seconds since the Epoch, or UNIX Epoch time) is a system for describing a point in time. A UNIX timestamp is a 32-bit value representing the number of seconds since January 1, 1970 UTC (the UNIX epoch). Consequently, Epoch timestamps are hard to interpret by humans.
+
+Clear out the Recipe and Input from our previous exercise.
+
+Copy and paste the following Unix Epoch Timestamp into the CyberChef Input: 
+
+1608247800
+
+In Operations search for "Epoch" or "Unix Time".
+
+Add "From UNIX Timestamp" to the Recipe and click on the "BAKE!" button.
+
+This gives us a human readable timestamp of "Thu 17 December 2020 23:30:00 UTC", but that is in UTC. Now let's see if we can convert this to Eastern Standard Time (EST).
+
+In Operations search for "Translate" and add "Translate DateTime Format" to our recipe.
+
+Within "Translate DateTime Format" change Builtin formats from "Standard date and time" to "Verbose date and time". Then change the Output timezone to "America/New_York" and click the "BAKE!" button. We should now receive the following output:
+
+Thursday 17th December 2020 18:30:00 -05:00 EST
+
+
+******************************
+******** Exercise 03: ********
+******************************
+
+Image Rendering & EXIF Data Extraction
+--------------------------------------
+
+Objective: Retrieve available EXIF data from an image file.
+
+Background: Exchangeable Image File Format (EXIF) data is metadata and ancillary tags embedded in images (JPEG, JPG, TIFF, etc.) and audio files. EXIF data is typicaally generted by digital cameras, scanners, image editing software, and other systems handling image and sound files. EXIF data from digital photos usually contains information about the image file itself as well as the device used to create it. Photographs from a digital camera may also contain EXIF data providing geographical coordinates where the digital photo was taken.
+
+Beyond text inputs, CyberChef is also able to work with image files. Our first step will be to render an image file.
+
+Clear out the Recipe and Input from our previous exercise.
+
+For the Input select "Open file as input" and open the "exif_example.jpg" from the lab files.
+
+In Operations, search for "render" and add "Render Image" to the Recipe then click on the "BAKE!" button to see the image.
+
+Next, let's examine the image file for EXIF data.
+
+In Operations search for "EXIF" and add "Extract EXIF" to the Recipe.
+
+Click on the "BAKE!" button and that should return the following output:
+
+Found 15 tags.
+
+ImageDescription: a5cb01550dbb9a6bf732f87e413f6e231cc4581e6a5be800fb0871dce0760cd5
+Orientation: 1
+XResolution: 300
+YResolution: 300
+ResolutionUnit: 2
+Software: GIMP 2.10.18
+ModifyDate: 1608125402
+ImageWidth: 225
+ImageHeight: 256
+BitsPerSample: 8,8,8
+PhotometricInterpretation: 6
+SamplesPerPixel: 3
+ColorSpace: 1
+ExifImageWidth: 88
+ExifImageHeight: 100
+
+
+******************************
+******** Exercise 04: ********
+******************************
+
+CiNPA Security SIG Logo Challenge
+---------------------------------
+
+Objective: Decode the encoded logo text.
+
+During the April 2018 CiNPA Security SIG meeting, a new logo was unveiled for the group. Part of the logo features a string of encoded content in a green screen terminal color. During closing announcements, meeting attendees were each handed printouts of the new logo, and tasked with decoding the text as a one-time "CiNPA Security SIG: Decoder Challenge" contest. Klaus Grismayer went on to win the challenge by returning the first of three successful contest entries.
+
+Clear out the Recipe and Input from our previous exercise.
+
+For the Input select "Open file as input" and open the "2k18-css_logo.png" from the lab files.
+
+In Operations, search for "render" and add "Render Image" to the Recipe then click on the "BAKE!" button to see the image.
+
+The pairing of numeric characters along with alphabetic characters no higher in the alphabet than the letter "f" is a strong indicator that this is hexadecimal encoded content.
+
+Observe the hex text in the logo, then clear out both the Recipe and Input again.
+
+Copy and paste the following hex block into the CyberChef Inputs:
+
+43 69 6e 63 69 6e 6e 61 74 69 20 4e 65 74 77
+6f 72 6b 69 6e 67 20 50 72 6f 66 65 73 73 69
+6f 6e 61 6c 73 20 41 73 73 6f 63 69 61 74 69
+6f 6e 20 53 65 63 75 72 69 74 79 20 53 70 65
+63 69 61 6c 20 49 6e 74 65 72 65 73 74 20 47
+72 6f 75 70 3a 20 63 69 6e 70 61 2e 6f 72 67
+
+In Operations search for "From Hex" and add "From Hex" to the CyberChef Recipe then click on the "BAKE!" button.
+
+This should reveal the following decoded output:
+
+Cincinnati Networking Professionals Association Security Special Interest Group: cinpa.org
+
+
+******************************
+******** Exercise 05: ********
+******************************
+
+File Hashing
+------------
+
+Objective, Part 1: Learn to generate hash values of files using CyberChef. 
+
+Background: A hash is a signature of a file or message. Cryptographic hashing algorithms are one-directional mathematical formulas designed to generate a unique value for every possible input. File hashes are often used as a way of validate the integrity of files and help identify them even if they are moved and/or renamed. CyberChef is capable of hashing strings or files in lieu of, or in the absence of native OS tools or utilities.
+
+Clear out the Recipe and Input from our previous exercise.
+
+For the Input select "Open file as input" and open the "2k18-css_logo.png" from the lab files.
+
+In Operations, search for "MD5" and add "MD5" to the Recipe then click on the "BAKE!" button to obtain the following MD5 hash:
+
+3ac7ed0b7c315d21bdd38d424ce7c8bd
+
+Click on the "Disable Operation" icon in the MD5 Recipe to disable it from the Recipe.
+
+In Operations, search for "SHA2" and add "SHA2" to the Recipe then change the "Size" to "256".
+
+Click on the "BAKE!" button to obtain the following SHA2 hash value of the file:
+
+950a05d3371e1db2d17613b0780c460040e15d2543ee94c26d6e60d274717fb9
+
+NOTE: If you receive a hash value of "af7dd04629ba93764a349f332769602f2410e1cfb4605856046fadbf43fcbf29", the MD5 Recipe is not disabled, and you are receiving a SHA256 value of the MD5 hash. Simply click on the the "Disable Operation" icon in the MD5 Recipe to disable it, and click on the "BAKE!" button again. This is a good reminder to be careful when stacking multiple Operations in your CyberChef Recipes.
+
+Objective, Part 2: Use CyberChef to generate calcultated estimations of hashing algorithms on unknown hashes.
+
+Background: An all-too-common scenario and problem is receiving only a hash value second-hand or by a third-party, without being provided the hashing algorithm used to generate the hash value. This is a challenge when threat hunting or blocking file hashes within an environment. Fortunately, CyberChef is capable of performing an analysis on hashes by themselves to make a best-effort estimation of the hashing algorithm used to produce the message digest.
+
+Clear out the Recipe and Input in CyberChef again.
+
+Copy and paste the following string into the Input in CyberChef:
+
+013c7708f1343d684e3571453261b586
+
+In Operations, search for "hash", and add "Analyse hash" to the Recipe. That should return various lengths and a list of potential hashing functions. The most likely hashing algorithm used will be at the top of the list (i.e., MD5).
+
+Replace the previous hash value in Inputs by copying and overwriting the hash value with the following hash:
+
+5968670c0345b0ab5404bd84cb60d7af7a625020
+
+Click the "BAKE!" button again, and note that our most likely hashing algorithm used is SHA-1.
+
+Replace the previous hash value in Inputs by copying and overwriting the hash value with the following hash:
+
+77bdcb2a9873c4629d8675c8ce9cc8a0cf35c514e27f7a6dc2bc4b31f79dd9e2
+
+Click the "BAKE!" button again, and note that our most likely hashing algorithm used is SHA-256.
+
+We believe our file hashes are MD5, SHA-1, and SHA-256 respectively. In this case, we are able to confirm this by looking at the first hashes in the second row of the following GitHub repo table:
+
+https://github.com/fireeye/red_team_tool_countermeasures/blob/master/all-hashes.csv
+
+
+******************************
+******** Exercise 06: ********
+******************************
+
+Base64 Decoding
+---------------
+
+Objective: Decode an unknown string value into a human readable output.
+
+Background: Based on a real-world Capture the Flag (CTF) event, contestants had to decode a string in order to obtain the internet address of the CTF. In other words, you had to hack your way into the CTF just to play it. Though it lacked the telltale signs of one or two equal signs (=) at the end of the string, I thought it might be Base64 encoded simply due to the prevalence of Base64.
+
+Clear out the Recipe and Input from our previous exercise.
+
+Copy and paste the following string into the Input in CyberChef:
+
+YUhSMGNITTZMeTkwZDJsMGRHVnlMbU52YlM5ak0zSnJZV2c9
+
+In Operations search for "Base64" then add "From Base64" to the Recipe and click on the "BAKE!" button.
+
+NOTE: Now we get the telltale trailing "=" from the following Output:
+
+aHR0cHM6Ly90d2l0dGVyLmNvbS9jM3JrYWg=
+
+Add a second "From Base64" to the Recipe and click on the "BAKE!" button again.
+
+Now we get the following web address:
+
+https://twitter.com/c3rkah
+
+This reveals that the original string had simply been double Base64 encoded.
+
+
+******************************
+******** Exercise 07: ********
+******************************
+
+DerbyCon 9.0 Challenge Coin
+---------------------------
+
+Objective: Decrypt an unknown string value into a human readable output.
+
+Background: Challenge coins were handed out at DerbyCon 9.0 in September, 2019. These coins featured a crypto challenge on them. Attendees were told that everything needed to solve the challenge was on the coins themselves. This lab works through solving the challenge.
+
+Clear out the Recipe and Input from our previous exercise.
+
+Copy and paste the following string into the Input in CyberChef:
+
+CwwDBgERST8IGQQ/BggBHAREJQcJCigdAR0bDVQkAAACNRABHB8HVilFGg0jHQYAHQ9T
+NQYbBDQMQh0bDVQkAAACNRABHB0NVikbGQQoHRoGHwdTKUcqADQLFyocBkYjGwsTIxtA
+
+In Operations search for "Base64" then add "From Base64" to the Recipe and click on the "BAKE!" button.
+
+In Operations search for "XOR" then add "XOR" to the Recipe.
+
+Change the format from "HEX" to "UTF8".
+
+Copy and paste the following string into the "Key" field:
+
+Finish Line
+
+Click on the "BAKE!" button.
+
+This will reveal the following message:
+
+Memoryisawayofholdingontothethingsyoulove,thethingsyouare,thethingsyouneverwanttolose.DerbyConforever.
+
+Or spaced out for better readability:
+
+Memory is a way of holding on to the things you love, the things you are, the things you never want to lose. DerbyCon forever.
+
+NOTE: Attendees had to guess at the XOR key, but were told "everything you need to solve the challenge is on the coin". DerbyCon 9.0 was named "Finish Line" as a tribute to the nineth and final year of the long-running annual hacker conference. There was also a binary string stamped on the coin, which seemed to be a red herring intended to distract would-be code breakers.
+
+
+******************************
+******** Exercise 08: ********
+******************************
+
+YARA Rules
+----------
+
+Objective: Test an unknown file against a YARA rule.
+
+Background: YARA is a tool aimed at (but not limited to) helping malware researchers to identify and classify malware samples. With YARA you can create descriptions of malware families (or whatever you want to describe) based on textual or binary patterns.
+
+Clear out the Recipe and Input from our previous exercise.
+
+For the Input select "Open file as input" and open the "YARAtestFile.exe.renamed" from the lab files.
+
+In Operations, search for "YARA" and add "YARA Rules" to the Recipe. Copy and paste the following YARA rules stanza into the "Rules" section of the "YARA Rules" recipe:
+
+rule cyberchef_yara_test {
+    /*
+       Per standard, match only if the file contains the exact test string.
+       The raw string to be matched is:
+       CyberChef Test File
+    */
+
+    meta:
+        description = "This is a test, intended to verify that the CyberChef YARA Rules are working correctly."
+        author = "CiNPA Security SIG"
+        reference = "http://www.cinpa.org/security"
+
+    strings:
+        $regex_pattern = /CyberChef\sTest\sFile/
+
+    condition:
+        all of them
+}
+
+Click on the "BAKE!"
+
+This shows us that "Input matches rule "cyberchef_yara_test" 1 time."
+
+Experiment with checking and unchecking the various "YARA Rules" Recipe options and click the "BAKE!" button.
+
+Notice the changes under "Output" each time the recipe is baked with different options selected.
+
+
+******************************
+******** Exercise 09: ********
+******************************
+
+Steganography
+-------------
+
+Objective: Find the secret message hidden inside the raw data of an image file.
+
+Background: Steganography is the practice of concealing a file, message, image, or video within another file, message, image, or video. In other words, steganography is used to hide data within audio, image, and multimedia files. The word steganography comes from Greek steganographia, which combines the words steganós, meaning "covered or concealed", and -graphia meaning "writing".
+
+Learn about Magic Numbers / Magic Bytes at the following web site:
+
+https://www.garykessler.net/library/file_sigs.html
+
+NOTES: The first few bytes of a file (almost like a header) provide the file type of the file, which can be helpful in identifying a file type should a file extension be renamed or removed. Further note that .png files specifically begin with a "PNG" ASCII signature and have an "IEND" trailer.
+
+Clear out the Recipe and Input from our previous exercise.
+
+For the Input select "Open file as input" and open the "2k18-css_logo.png" from the lab files.
+
+In Operations search for "Strings" and add "Strings" to our Recipe.
+
+In "Strings" Change the "Minimum length" from "4" to "2".
+
+Change Match from "Alphanumeric + punctuation (A)" to "All printable chars (A)".
+
+Click on the "BAKE!" button. In "Output",
+
+Note how the first line is "PNG" and the final two lines are "IEND" and "B`". 
+
+Clear out only the Input and Output in CyberChef.
+
+For the Input select "Open file as input" and open the "hw_steganography.png" from the lab files.
+
+Click on the "BAKE!" button again.
+
+In "Output", note how the first line is still "PNG", but the final line appears to be a hex string following "IEND" and "B`".
+
+Clear out the Recipe and Input and Output for a clean slate again.
+
+Copy and paste the following hex string into Input:
+
+73 79 6e 74 7b 67 62 62 5f 7a 6e 61 6c 5f 66 72 70 65 72 67 66 7d 
+
+In Operations search for "From Hex" and add "From Hex" to the CyberChef Recipe then click on the "BAKE!" button.
+
+We get an unreadable string of text back, but with some special characters and a couple of curly brackets in the Output. This formatting is an indicator that a Caesar substitution cipher was potentially used to shift the alphabetic character values.
+
+In Operations search for "ROT13" and add "ROT13" to the CyberChef Recipe then click on the "BAKE!" button.
+
+This reveals the following encoded message hidden inside of the image file:
+
+flag{too_many_secrets}
+
+NOTE: One of the giveaways of steganography here is seeing characters after the "IEND" trailer. This content after the trailer is something that most image viewers would ignore and not process in rendering a .png image file, since the trailer indicates the end of the image file to the rendering application. We would also expect to see hexadecimal code inside of a hex editor, but not within the ASCII translation of the originating hex code.
+
+
+******************************
+******** Exercise 10: ********
+******************************
+
+Octal to Decimal URL Conversion
+-------------------------------
+
+Objective: Convert an octal IP web address to the equivalent IPv4 web address.
+
+Background: Some malicious threat actors have recently started using such as Octal, Hexadecimal, and Integer or DWORD IP address hyperlinks to phishing sites and command and control servers. In this lab exercise, we will use CyberChef to convert an Octal URL to it's Dotted decimal IPv4 address equivalent.
+
+Clear out the Recipe and Input from our previous exercise.
+
+Copy and paste the following octal web address to Input:
+
+https://0330.0072.0307.0116
+
+In Operations search for "Find" and add "Find / Replace" to our Recipe.
+
+In the "Find" field, copy and paste in the following Regex pattern:
+
+https:\/\/
+
+Click on the "BAKE!" button to remove the address prefix.
+
+Add "Find / Replace" from Operations to our Recipe.
+
+In the second "Find" field, copy and paste in the following Regex pattern:
+
+\.
+
+Then add a comma "," in the "Replace" field then click on the "BAKE!" button.
+
+In Operations search for "From Octal" and add "From Octal" to our Recipe and select "Comma" for the "Delimeter".
+
+In Operations search for "To Decimal" and add "To Decimal" to our Recipe and select "Comma" for the "Delimeter".
+
+In Operations search for "Find" and add "Find / Replace" to our Recipe.
+
+Enter a comma "," in the "Find" field, and enter a dot "." in the "Replace" field.
+
+Add another "Find / Replace" from Operations to our Recipe.
+
+Enter a carrot symbol "^" in the "Find" field and the following string into the "Replace" field:
+
+https://
+
+Click on the "BAKE!" button. 
+
+This gives us the following IPv4 web site address:
+
+https://216.58.199.78
+
+Go to the "https://216.58.199.78" site in your browser.
+
+To see how CyberChef is using our recipe and the Output along the way, repeatedly click on "STEP" to the left of the "BAKE!" button and observe how CyberChef shows the Output at each step in our Recipe.
+
+Thank you for attending!
+
+
+******************************
+************ Misc ************
+******************************
+
+Further Learning
+----------------
+
+We've covered a lot of ground in these labs, but barely scratched the surface of the capabilities of CyberChef. Here are some additional resources to continue learning with CyberChef...
+
+https://github.com/mattnotmax/cyberchef-recipes
+https://www.osdfcon.org/presentations/2019/Jonathan-Glass_Cybersecurity-Zero-to-Hero-With-CyberChef.pdf
