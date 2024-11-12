@@ -67,7 +67,7 @@ echo -n "Security" | md5sum | tr -d " -" >> hashfile.txt
 echo -n "SIGrules" | md5sum | tr -d " -" >> hashfile.txt
 echo -n "guest" | md5sum | tr -d " -" >> hashfile.txt
 echo -n "password" | md5sum | tr -d " -" >> hashfile.txt
-echo -n "PutinLovesYan!" | md5sum | tr -d " -" >> hashfile.txt
+echo -n "MicahLovesWaffles!" | md5sum | tr -d " -" >> hashfile.txt
 echo -n "Secret" | md5sum | tr -d " -" >> hashfile.txt
 echo -n "Testing123" | md5sum | tr -d " -" >> hashfile.txt
 echo -n "Wizard!" | md5sum | tr -d " -" >> hashfile.txt
