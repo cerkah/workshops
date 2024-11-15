@@ -1,13 +1,13 @@
 ******************************
 ***** Wireshark Workshop *****
 ******************************
-******* Version: 1.0.1 *******
+******* Version: 1.0.2 *******
 ******************************
 ***** -By: Matt Scheurer *****
-****** Twitter: @c3rkah ******
+**** https://x.com/c3rkah ****
 ************ and *************
 ******* Micah K. Brown *******
-**** Twitter: @micahkbrown ***
+* https://x.com/micahkbrown **
 ******************************
 ******************************
 
@@ -243,7 +243,9 @@ Objective: Identify and unravel a real-world vulnerability exploit.
 Background on Log4j: Apache Log4j is a Java-based logging utility. A critical (CVSS 10/10) Remote Code Execution (RCE) vulnerability (CVE-2021-44228) exists in older releases of Apache’s Log4j software library. Sometimes this vulnerability is also referred to as "Log4Shell" or "Logjam". Log4j is very broadly used in a variety of consumer and enterprise services, websites, and applications. An unauthenticated remote threat actor could exploit this vulnerability to take control of an affected system through Remote Code Execution (RCE). Log4j uses the Java Naming and Directory Interface (JNDI) Application Programming Interface (API) to obtain naming and directory services from several available service providers such as: Lightweight Directory Access Protocol (LDAP), Common Object Services (COS), Java Remote Method Invocation (RMI) registry, Domain Name Service (DNS), and so forth. In the exploit, JNDI is leveraged to call on these naming and directory services to initiate a RCE on a vulnerable endpoint.
 
 1. Open the "7)jndi_exploit.pcap" file in Wireshark.
-2. Enter a display filter of "frame contains jndi" and Enter.
+2. Open the "Find a Packet" search bar.
+2a. Select "Packet details" and set to "String".
+2b. Enter "jndi" (without quotes) and click "Find".
 3. Right click on the packet displayed and select the "Follow" menu, then click on "HTTP Stream".
 4. Note that the user-agent is "curl/7.64.1".
 5. Observing that the submitted "X-Api-Version" begins with "${jndi:ldap://", which is a strong indicator of a Log4j attack attempt.
