@@ -154,6 +154,21 @@ NOTES: Unlike many operators KQL does not like dashes in the column names, which
 ******** Exercise 03: ********
 ******************************
 
+Reviewing log data in the "SecurityLogs" table
+----------------------------------------------
+
+Steps:
+
+1. 
+
+
+******************************
+******** Exercise 04: ********
+******************************
+
+Incident Response and Threat Hunt use cases
+-------------------------------------------
+
 
 
 
