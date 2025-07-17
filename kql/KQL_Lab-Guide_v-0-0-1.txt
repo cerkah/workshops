@@ -112,7 +112,7 @@ Semicolon “;” in KQL
 Getting Started
 ---------------
 
-We'll leverage the free "Kusto Detective Agency" training platform environment for our KQL workshop lab exercises. For the purposes of this training, we will refer to the top window pane as the "query" window, and the bottom pane as the "results" window.
+We'll leverage the free "Kusto Detective Agency" training platform environment for our KQL workshop lab exercises. For the purposes of this training, we will refer to the top window pane as the "query" window, and the bottom pane as the "results" window. You may need a Microsoft "Live" account to get started in the "Kusto Detective Agency" training environment. Additionally, you may also need to click out of some initial windows to get past the online introductory materials. Please modify the following steps as-needed...
 
 Steps:
 
