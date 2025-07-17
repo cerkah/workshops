@@ -34,7 +34,7 @@ Pro Tip: Always use the at sign "@" before the " in strings to account for spaci
 Getting the Syntax correct
 --------------------------
 
-In General, if KQL isn't attempting to help you with auto-fill pop-up suggestions along the way, something probably isn't right.
+In General, if KQL isn't attempting to help you with auto-fill pop-up suggestions along the way, something probably isn't right. Not seeing color coded search operators and column names is another indicator that our KQL syntax might be off.
 
 The comment (remark) trick
 --------------------------
@@ -211,8 +211,56 @@ Repeat these steps for each of the other remaining "SecurityLogs" database table
 Incident Response and Threat Hunt use cases
 -------------------------------------------
 
-Failed Logins:
+Failed Logins scenario:
 
+A high number of Failed logins is potentially concerning. Password changes, password expirations, scripts, and automation may cause a higher than usual number of failed account login attempts. A high volume of login failures may also indicate a cyber attack such as: brute force, fuzzing, and various other password attacks. Before we investigate them, we first want to identify our top account(s) frequently failing login attempts.
+
+Which account has the highest number of failed login attempts?
+
+Run the following KQL query to get a list of accounts to identify the username having the most login failures:
+
+database('SecurityLogs').table('AuthenticationEvents') 
+| where result contains @"Failed"
+| summarize count() by username
+| sort by count_
+
+Next, we're going to focus our investigation on the "jadenman" account activity. We'll comment out (//) lines 3 and 4, and add the "jadenman" account to our KQL by changing to the following:
+
+database('SecurityLogs').table('AuthenticationEvents') 
+| where result contains @"Failed"
+// | summarize count() by username
+// | sort by count_
+| where username == @"jadenman"
+
+Review the 22 records (notice that matches the count in our first query). Some interesting results are that we see a relatively small number of failed logins most days over a 5-day period. While that in and of itself isn't highly suspicious, there are other potentially concerning artifacts. Scrolling through and visually scanning the data, we do see that it's not a single user_agent in the logs. We can modify our KQL to get a list of unique user-agent strings as noted below:
+
+database('SecurityLogs').table('AuthenticationEvents') 
+| where result contains @"Failed"
+// | summarize count() by username
+// | sort by count_
+| where username == @"jadenman"
+| summarize count() by user_agent
+
+This returns 2 distinct user-agent strings in our results. Most users generally have a preferred web browser and stay with that. However, some users might have multiple devices (i.e., desktop, laptop, mobile device, etc.), which could account for the activity. Lets continue our investigation. Comment out the last "| summarize" line we added previoiusly and rerun the following query:
+
+database('SecurityLogs').table('AuthenticationEvents') 
+| where result contains @"Failed"
+// | summarize count() by username
+// | sort by count_
+| where username == @"jadenman"
+// | summarize count() by user_agent
+
+One thing that catches an experienced eye is the unusually high number of unique source IP addresses that do not appear to be any sort of a continguous CIDR range. Let's get a list of all the unique IP addresses producing fake logins for the "jadenman" account. Let's obtain a complete deduplicated list of unique IP addresses. Add the line "| distinct src_ip" to the bottom of our KQL query as depicted below and "Run" the query again:
+
+database('SecurityLogs').table('AuthenticationEvents') 
+| where result contains @"Failed"
+// | summarize count() by username
+// | sort by count_
+| where username == @"jadenman"
+// | summarize count() by user_agent
+| distinct src_ip
+
+This returns 21 unique records, when the total number of failed logins for this one account was 22. One consideration would be to investigate whether the IP addresses belong to the same ISP? One question worth asking might be if the user was traveling over that stretch of time? If so, how do they connect to get online (public wifi, hotel wifi, hotspotting their mobile phone, etc.)? Are they using a VPN service with a large number of exit nodes which are very geographically distributed. In lieu of a reasonable explanation, these failed logins from a bunch of unique IP addresses is an indicator of potential credential enumeration attack attempts by a threat actor(s).
 
 
 ******************************
