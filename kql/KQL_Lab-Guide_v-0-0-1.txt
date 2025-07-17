@@ -30,7 +30,22 @@ KQL Syntax Basics
 Having a foundational knowledge of another query language such as the Structured Query Language (SQL) helps with learning KQL faster, but is not required. There are vast differences between the operators and syntax between both KQL and SQL. A KQL query typically starts with a data source and uses operators connected by the pipe (|) character.
 
 Pro Tip: Always use the at sign "@" before the " in strings to account for spacing, non-standard alpa-numeric characters, etc.
- 
+
+Getting the Syntax correct
+--------------------------
+
+In General, if KQL isn't attempting to help you with auto-fill pop-up suggestions along the way, something probably isn't right.
+
+The comment (remark) trick
+--------------------------
+
+Use double forward slashes (//) to comment portions of the query language, which is then ignored by KQL. When to use them:
+
+- Anyplace, anytime
+- At the beginning of a line
+- To explain what a section of the KQL query is doing
+- For debugging and troubleshooting improper syntax or a broken statement!
+
 Restrict results by rendered output columns
 -------------------------------------------
 
@@ -54,7 +69,7 @@ Restricting results by time
 Examples:
 | sort by Timestamp
 | top 100 by Timestamp desc
-| where Timestamp > ago(1d)
+| where Timestamp < ago(3d)
 | where Timestamp >= datetime(2025-06-23) and Timestamp < datetime(2025-06-24)
 | search in (Thing1,Thing2,Thing3,) and Timestamp between (ago(1h) .. now())
 
@@ -170,6 +185,7 @@ Steps:
 Incident Response and Threat Hunt use cases
 -------------------------------------------
 
+Failed Logins:
 
 
 
