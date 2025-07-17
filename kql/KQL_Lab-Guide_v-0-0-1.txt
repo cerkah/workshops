@@ -61,7 +61,43 @@ GIGO
 
 SIEM platforms and query languages can only provide results as good as the quality of the logs and data hosted in them. There are a variety of issues plaguing SIEM logs. Common problems are log configuration issues, health and uptime failures, not ingesting data properly, data indexing incorrectly, data and/or fields not parsing correctly, and more.
 
-* WIP *
+Steps, Part 1:
+
+1. Clear the KQL window or begin with a new tab.
+2. Navigate down to the "SecurityLogs" database and expand the list of tables.
+3. Double click on the "Email" table to add it to the KQL window.
+4. Delete the second line, especially the pipe (|) symbol.
+5. Verify that there is only one line with the following query:
+   database('SecurityLogs').table('Email')
+6. Click the "Run" button giving the Azure Data Explorer time to complete the query.
+
+At first glance, it appears that we have a good set of data. However, upon further inspection we see the data column names do not match the expected data types outside of the "event_time" appearing to be a valid timestamp. Unfortunately, these data type mismatches are a somewhat common issue observed within SIEM platforms regardless of the vendor platform.
+
+"event_time" is as expected, but the only such field which is.
+"sender": appears to be a mail server name.
+"reply_to": appears to be the IP address belonging to the sender's email transport gateway.
+"recipient": appears to be a browser (webmail?) user agent string value.
+"subject": appears to be the username of the email message recipient.
+"accepted": appears to be a null value "," from the CSV data and an unused field.
+"link": appears to be a hexadecimal Message ID number. 
+
+Conclusions: We can adjust our queries for the actual information we want or avoid using the "Email" table completely, or we can fix it on the fly using KQL.
+
+Steps, Part 2:
+
+1. Add the following code (without the double quotes) to the second line: "| project-rename server=sender,src_ip=reply_to,user_agent=recipient,username=subject,message_id=link"
+2. Add the following code (without the double quotes) to the third line: "| project-away accepted" server=sender,src_ip=reply_to,user_agent=recipient,username=subject,message_id=link"
+3. Review and ensure that the full KQL query appears as follows:
+
+   database('SecurityLogs').table('Email') 
+   | project-rename server=sender,src_ip=reply_to,user_agent=recipient,username=subject,message_id=link
+   | project-away accepted
+
+4. Click on the "Run" button.
+
+This returns more appropriated named columns in our KQL results.
+
+NOTES: KQL does not like dashes in the column names, which is why underscores were used. Column names must be unique, which we chose "username" instead of "recipient", since the "recipient" column name already existed in our database table.
 
 
 ******************************
