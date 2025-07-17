@@ -1,0 +1,51 @@
+******************************
+******** KQL Workshop ********
+******************************
+******* Version: 0.0.1 *******
+******************************
+***** -By: Matt Scheurer *****
+******************************
+********* X: @c3rkah *********
+******************************
+
+******************************
+******** Introduction ********
+******************************
+
+What is the Kusto Query Language (KQL)?
+
+The Kusto Query Language (KQL) is a powerful query language for exploring and analyzing data in a variety of Microsoft platforms. Think of KQL being useful for retrieving and analyzing log data similar to how the Structured Query Language (SQL) is useful for working with databases and their contents. KQL is the defacto query language used throughout Microsoft Azure, the Microsoft Sentinel Security Information and Event Management (SIEM) platform, and a variety of Microsoft Defender security solutions to name a few.
+
+NOTE: Microsoft Azure Resource Graph, Microsoft Defender for Endpoints (MDE) "Advanced Hunting" and others lack support for some tables, sources, and render operators available in native KQL.
+
+
+******************************
+******** Exercise 00: ********
+******************************
+
+Getting Started
+---------------
+
+We'll leverage the free "Kusto Detective Agency" training platform environment for our KQL workshop lab exercises.
+
+Steps:
+
+1. Go to the web site, https://detective.kusto.io/
+2. Click on "Go to Inbox".
+3. Click on the "Onboarding" message.
+4. Click on the "Run" button to launch the "Azure Data Explorer".
+5. Click on the "Homoe" icon.
+6. Click on the "Get Data" icon to note the variety of "data sources" which are connectable and importable to the Azure Data Explorer.
+7. Click on the "Cancel" button to exit the Get Data settings and return to the Home screen.
+8. Click on one of the "Query" buttons to open the KQL screen.
+9. Note that the KQL Query window supports multiple renamable tabs for multiple active queries.
+10. Expand the "Security Logs" database to review available tables in the example data.
+
+
+******************************
+******** Exercise 01: ********
+******************************
+
+KQL Syntax Basics
+-----------------
+
