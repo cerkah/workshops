@@ -104,15 +104,22 @@ NOTES: Unlike many operators KQL does not like dashes in the column names, which
 
 
 ******************************
+******** Exercise 03: ********
+******************************
+
+
+
+
+******************************
 ************ Misc ************
 ******************************
 
 Further Learning
 ----------------
 
-We've covered a lot of ground in these lab exercises, but barely scratched the surface on the full capabilities of KQL. Here are some additional resources to continue learning more about KQL...
+We've covered a lot of ground in these lab exercises, but barely scratched the surface on the full capabilities of KQL. Here are some additional resources to continue learning more about KQL.
 
-KQL quick refernece
+KQL quick reference
 https://learn.microsoft.com/en-us/kusto/query/kql-quick-reference?view=azure-data-explorer&preserve-view=true
 
 Microsoft "Hunting Queries"
