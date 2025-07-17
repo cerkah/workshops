@@ -8,6 +8,7 @@
 ******* x.com: @c3rkah *******
 ******************************
 
+
 ******************************
 ******** Introduction ********
 ******************************
@@ -21,29 +22,6 @@ NOTE: Microsoft Azure Resource Graph, Microsoft Defender for Endpoints (MDE) "Ad
 
 ******************************
 ******** Exercise 00: ********
-******************************
-
-Getting Started
----------------
-
-We'll leverage the free "Kusto Detective Agency" training platform environment for our KQL workshop lab exercises. For the purposes of this training, we will refer to the top window pane as the "query" window, and the bottom pane as the "results" window.
-
-Steps:
-
-1. Go to the web site, https://detective.kusto.io/
-2. Click on "Go to Inbox".
-3. Click on the "Onboarding" message.
-4. Click on the "Run" button to launch the "Azure Data Explorer".
-5. Click on the "Homoe" icon.
-6. Click on the "Get Data" icon to note the variety of "data sources" which are connectable and importable to the Azure Data Explorer.
-7. Click on the "Cancel" button to exit the Get Data settings and return to the Home screen.
-8. Click on one of the "Query" buttons to open the KQL screen.
-9. Note that the KQL Query window supports multiple renamable tabs for multiple active queries.
-10. Expand the "Security Logs" database to review available tables in the example data.
-
-
-******************************
-******** Exercise 01: ********
 ******************************
 
 KQL Syntax Basics
@@ -98,6 +76,29 @@ Semicolon “;” in KQL
 - Defines multiple queries in one
 - Create usable named expressions ("like" functions or "let" statements)
 - Chain operations that depend on earlier definitions
+
+
+******************************
+******** Exercise 01: ********
+******************************
+
+Getting Started
+---------------
+
+We'll leverage the free "Kusto Detective Agency" training platform environment for our KQL workshop lab exercises. For the purposes of this training, we will refer to the top window pane as the "query" window, and the bottom pane as the "results" window.
+
+Steps:
+
+1. Go to the web site, https://detective.kusto.io/
+2. Click on "Go to Inbox".
+3. Click on the "Onboarding" message.
+4. Click on the "Run" button to launch the "Azure Data Explorer".
+5. Click on the "Homoe" icon.
+6. Click on the "Get Data" icon to note the variety of "data sources" which are connectable and importable to the Azure Data Explorer.
+7. Click on the "Cancel" button to exit the Get Data settings and return to the Home screen.
+8. Click on one of the "Query" buttons to open the KQL screen.
+9. Note that the KQL Query window supports multiple renamable tabs for multiple active queries.
+10. Expand the "Security Logs" database to review available tables in the example data.
 
 
 ******************************
