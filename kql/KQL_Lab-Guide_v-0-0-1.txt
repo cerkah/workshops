@@ -57,7 +57,7 @@ KQL Syntax Basics
 GIGO
 ----
 
-"GIGO" is an acronym for Garbage In, Garbage Out.
+"GIGO" is an acronym for the concept of "Garbage In, Garbage Out".
 
 SIEM platforms and query languages can only provide results as good as the quality of the logs and data hosted in them. There are a variety of issues plaguing SIEM logs. Common problems are log configuration issues, health and uptime failures, not ingesting data properly, data indexing incorrectly, data and/or fields not parsing correctly, and more.
 
@@ -79,3 +79,6 @@ https://learn.microsoft.com/en-us/kusto/query/kql-quick-reference?view=azure-dat
 Microsoft "Hunting Queries"
 https://github.com/microsoft/Microsoft-365-Defender-Hunting-Queries
 https://github.com/Azure/Azure-Sentinel/tree/master/Hunting%20Queries/Microsoft%20365%20Defender
+
+Microsoft Sentinel Ninja Training
+https://aka.ms/SentinelNinjaTraining
