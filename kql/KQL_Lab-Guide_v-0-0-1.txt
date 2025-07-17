@@ -49,3 +49,33 @@ Steps:
 KQL Syntax Basics
 -----------------
 
+
+******************************
+******** Exercise 02: ********
+******************************
+
+GIGO
+----
+
+"GIGO" is an acronym for Garbage In, Garbage Out.
+
+SIEM platforms and query languages can only provide results as good as the quality of the logs and data hosted in them. There are a variety of issues plaguing SIEM logs. Common problems are log configuration issues, health and uptime failures, not ingesting data properly, data indexing incorrectly, data and/or fields not parsing correctly, and more.
+
+* WIP *
+
+
+******************************
+************ Misc ************
+******************************
+
+Further Learning
+----------------
+
+We've covered a lot of ground in these lab exercises, but barely scratched the surface on the full capabilities of KQL. Here are some additional resources to continue learning more about KQL...
+
+KQL quick refernece
+https://learn.microsoft.com/en-us/kusto/query/kql-quick-reference?view=azure-data-explorer&preserve-view=true
+
+Microsoft "Hunting Queries"
+https://github.com/microsoft/Microsoft-365-Defender-Hunting-Queries
+https://github.com/Azure/Azure-Sentinel/tree/master/Hunting%20Queries/Microsoft%20365%20Defender
