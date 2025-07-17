@@ -49,9 +49,56 @@ Steps:
 KQL Syntax Basics
 -----------------
 
-A KQL query typically starts with a data source and uses operators connected by the pipe (|) character.
+Having a foundational knowledge of another query language such as the Structured Query Language (SQL) helps with learning KQL faster, but is not required. There are vast differences between the operators and syntax between both KQL and SQL. A KQL query typically starts with a data source and uses operators connected by the pipe (|) character.
 
-* WIP *
+Pro Tip: Always use the at sign "@" before the " in strings to account for spacing, non-standard alpa-numeric characters, etc.
+ 
+Restrict results by rendered output columns
+-------------------------------------------
+
+"project" to specify the output fields
+| project column1, column2, column3
+
+NOTE: Spaces between the columns is optional, but might help with readability.
+
+Restricting results by operators
+--------------------------------
+
+- "limit" vs "take" vs "top"
+-- "limit" and "take" essentially work the same
+- "take" retrieves a random subset (no ordering) of results
+- "top" returns the most (or least) prevalent criteria results
+-- “top by” is the highest number of results based on the criteria "asc" or "desc"
+
+Restricting results by time
+---------------------------
+
+Examples:
+| sort by Timestamp
+| top 100 by Timestamp desc
+| where Timestamp > ago(1d)
+| where Timestamp >= datetime(2025-06-23) and Timestamp < datetime(2025-06-24)
+| search in (Thing1,Thing2,Thing3,) and Timestamp between (ago(1h) .. now())
+
+Summarize results
+-----------------
+
+| summarize count() by [COLUMN-NAME]
+
+Case Sensitivity
+----------------
+
+KQL hash searches are typically case sensitive and require lower case alphebetic characters. Annoyingly, PowerShell's built-in Hashing cmdlet returns alphabetic hash values in upper-case by default. Use the following in PowerShell to convert returned hash values to lower-case so KQL finds them:
+(Get-FileHash -Algorithm SHA256 "[FILEPATH]").Hash.ToLower()
+
+MISC
+----
+
+Semicolon “;” in KQL
+- Defines multiple queries in one
+- Create usable named expressions ("like" functions or "let" statements)
+- Chain operations that depend on earlier definitions
+
 
 ******************************
 ******** Exercise 02: ********
