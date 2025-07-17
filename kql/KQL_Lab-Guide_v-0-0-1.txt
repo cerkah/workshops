@@ -79,6 +79,12 @@ Examples:
 | where Timestamp >= datetime(2025-06-23) and Timestamp < datetime(2025-06-24)
 | search in (Thing1,Thing2,Thing3,) and Timestamp between (ago(1h) .. now())
 
+Deduplicated (unique) results
+-----------------------------
+
+Example:
+| distinct [COLUMN-NAME]
+
 Summarize results
 -----------------
 
@@ -179,11 +185,23 @@ NOTES: Unlike many operators KQL does not like dashes in the column names, which
 Reviewing log data in the "SecurityLogs" database
 -------------------------------------------------
 
+The purpose of this exercise is to familiarize yourself with the log data contained in the sample database.
+
 Steps:
 
-1. 
+1. Clear the KQL window or begin with a new tab.
+2. Navigate down to the "SecurityLogs" database and expand the list of tables.
+3. Double click on the "AuthenticationEvents" table to add it to the KQL window.
+4. Delete the second line, especially the pipe (|) symbol.
+5. Verify that there is only one line with the following query:
+   database('SecurityLogs').table('AuthenticationEvents')
+6. Click the "Run" button giving the Azure Data Explorer time to complete the query.
+7. Review samples of the log data being returned.
+8. Click the greater than  symbol ">" to the left of the timestamp of any result to review the log lines in detail.
+9. Resize the "Full" content view to the preferred height, and scroll through the details.
+10. Click the caron (inverted caret) "ˇ" to return to the single log line view.
 
-Repeat this process for each of the other remaining "SecurityLogs" database tables (Employees, FileCreationEvents, InboundBrowsing, OutboundBrowsing, PassiveDns, and ProccessEvents).
+Repeat these steps for each of the other remaining "SecurityLogs" database tables (Employees, FileCreationEvents, InboundBrowsing, OutboundBrowsing, PassiveDns, and ProccessEvents).
 
 
 ******************************
