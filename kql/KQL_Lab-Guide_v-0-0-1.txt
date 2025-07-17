@@ -26,7 +26,7 @@ NOTE: Microsoft Azure Resource Graph, Microsoft Defender for Endpoints (MDE) "Ad
 Getting Started
 ---------------
 
-We'll leverage the free "Kusto Detective Agency" training platform environment for our KQL workshop lab exercises.
+We'll leverage the free "Kusto Detective Agency" training platform environment for our KQL workshop lab exercises. For the purposes of this training, we will refer to the top window pane as the "query" window, and the bottom pane as the "results" window.
 
 Steps:
 
@@ -49,6 +49,9 @@ Steps:
 KQL Syntax Basics
 -----------------
 
+A KQL query typically starts with a data source and uses operators connected by the pipe (|) character.
+
+* WIP *
 
 ******************************
 ******** Exercise 02: ********
@@ -95,9 +98,9 @@ Steps, Part 2:
 
 4. Click on the "Run" button.
 
-This returns more appropriated named columns in our KQL results.
+This returns more appropriated named columns in our KQL results. The "project-rename" operator lets us rename one or more columns to suit our data or personal preferences. The "project-away" lets us hide a column(s) from the returned query results.
 
-NOTES: KQL does not like dashes in the column names, which is why underscores were used. Column names must be unique, which we chose "username" instead of "recipient", since the "recipient" column name already existed in our database table.
+NOTES: Unlike many operators KQL does not like dashes in the column names, which is why underscores were used instead. Column names must be unique, which we chose "username" instead of "recipient", since the "recipient" column name already existed in our database table.
 
 
 ******************************
