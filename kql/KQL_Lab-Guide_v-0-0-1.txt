@@ -39,12 +39,18 @@ In General, if KQL isn't attempting to help you with auto-fill pop-up suggestion
 The comment (remark) trick
 --------------------------
 
-Use double forward slashes (//) to comment portions of the query language, which is then ignored by KQL. When to use them:
+Use double forward slashes (//) to comment portions of the query language, which is then ignored by KQL.
 
+When to use the "//" comments:
 - Anyplace, anytime
 - At the beginning of a line
 - To explain what a section of the KQL query is doing
 - For debugging and troubleshooting improper syntax or a broken statement!
+
+Multiple Tab Support
+--------------------
+
+Most KQL platforms support the use of multiple tabs, which may be named or renamed to suit your specific purposes. This is a helpful method for experimenting and keeping queries logically separated from each other.
 
 Restrict results by rendered output columns
 -------------------------------------------
@@ -58,7 +64,7 @@ Restricting results by operators
 --------------------------------
 
 - "limit" vs "take" vs "top"
--- "limit" and "take" essentially work the same
+-- "limit" and "take" essentially work the same and are interchangable
 - "take" retrieves a random subset (no ordering) of results
 - "top" returns the most (or least) prevalent criteria results
 -- “top by” is the highest number of results based on the criteria "asc" or "desc"
@@ -170,12 +176,14 @@ NOTES: Unlike many operators KQL does not like dashes in the column names, which
 ******** Exercise 03: ********
 ******************************
 
-Reviewing log data in the "SecurityLogs" table
-----------------------------------------------
+Reviewing log data in the "SecurityLogs" database
+-------------------------------------------------
 
 Steps:
 
 1. 
+
+Repeat this process for each of the other remaining "SecurityLogs" database tables (Employees, FileCreationEvents, InboundBrowsing, OutboundBrowsing, PassiveDns, and ProccessEvents).
 
 
 ******************************
