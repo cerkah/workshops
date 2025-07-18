@@ -77,7 +77,7 @@ Examples:
 | top 100 by Timestamp desc
 | where Timestamp < ago(3d)
 | where Timestamp >= datetime(2025-06-23) and Timestamp < datetime(2025-06-24)
-| search in (Thing1,Thing2,Thing3,) and Timestamp between (ago(1h) .. now())
+| search in (Thing1,Thing2,Thing3) and Timestamp between (ago(1h) .. now())
 
 Deduplicated (unique) results
 -----------------------------
@@ -120,7 +120,7 @@ Steps:
 2. Click on "Go to Inbox".
 3. Click on the "Onboarding" message.
 4. Click on the "Run" button to launch the "Azure Data Explorer".
-5. Click on the "Homoe" icon.
+5. Click on the "Home" icon.
 6. Click on the "Get Data" icon to note the variety of "data sources" which are connectable and importable to the Azure Data Explorer.
 7. Click on the "Cancel" button to exit the Get Data settings and return to the Home screen.
 8. Click on one of the "Query" buttons to open the KQL screen.
