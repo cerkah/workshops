@@ -219,8 +219,8 @@ Repeat these steps for each of the other remaining "SecurityLogs" database table
 ******** Exercise 04: ********
 ******************************
 
-Incident Response and Threat Hunt use cases
--------------------------------------------
+Incident Response and Threat Hunt use case example
+--------------------------------------------------
 
 Failed Logins scenario:
 
