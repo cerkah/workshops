@@ -147,7 +147,9 @@ Steps, Part 1:
 3. Double click on the "Email" table to add it to the KQL window.
 4. Delete the second line, especially the pipe (|) symbol.
 5. Verify that there is only one line with the following query:
-   database('SecurityLogs').table('Email')
+
+database('SecurityLogs').table('Email')
+
 6. Click the "Run" button giving the Azure Data Explorer time to complete the query.
 
 At first glance, it appears that we have a good set of data. However, upon further inspection we see the data column names do not match the expected data types outside of the "event_time" appearing to be a valid timestamp. Unfortunately, these data type mismatches are a somewhat common issue observed within SIEM platforms regardless of the vendor platform.
@@ -164,8 +166,14 @@ Conclusions: We can adjust our queries for the actual information we want or avo
 
 Steps, Part 2:
 
-1. Add the following code (without the double quotes) to the second line: "| project-rename server=sender,src_ip=reply_to,user_agent=recipient,username=subject,message_id=link"
-2. Add the following code (without the double quotes) to the third line: "| project-away accepted" server=sender,src_ip=reply_to,user_agent=recipient,username=subject,message_id=link"
+1. Add the following code (without the double quotes) to the second line: "| project-rename 
+
+server=sender,src_ip=reply_to,user_agent=recipient,username=subject,message_id=link"
+
+2. Add the following code (without the double quotes) to the third line: "| project-away accepted" 
+
+server=sender,src_ip=reply_to,user_agent=recipient,username=subject,message_id=link"
+
 3. Review and ensure that the full KQL query appears as follows:
 
 database('SecurityLogs').table('Email') 
@@ -195,7 +203,9 @@ Steps:
 3. Double click on the "AuthenticationEvents" table to add it to the KQL window.
 4. Delete the second line, especially the pipe (|) symbol.
 5. Verify that there is only one line with the following query:
+
 database('SecurityLogs').table('AuthenticationEvents')
+
 6. Click the "Run" button giving the Azure Data Explorer time to complete the query.
 7. Review samples of the log data being returned.
 8. Click the greater than  symbol ">" to the left of the timestamp of any result to review the log lines in detail.
