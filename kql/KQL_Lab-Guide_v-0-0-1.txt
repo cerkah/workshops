@@ -289,6 +289,5 @@ https://learn.microsoft.com/en-us/kusto/query/kql-quick-reference?view=azure-dat
 Microsoft "Hunting Queries"
 https://github.com/microsoft/Microsoft-365-Defender-Hunting-Queries
 https://github.com/Azure/Azure-Sentinel/tree/master/Hunting%20Queries/Microsoft%20365%20Defender
-
 Microsoft Sentinel Ninja Training
 https://aka.ms/SentinelNinjaTraining
