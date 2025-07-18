@@ -126,7 +126,7 @@ Steps:
 7. Click on the "Cancel" button to exit the Get Data settings and return to the Home screen.
 8. Click on one of the "Query" buttons to open the KQL screen.
 9. Note that the KQL Query window supports multiple renamable tabs for multiple active queries.
-10. Expand the "Security Logs" database to review available tables in the example data.
+10. Expand the "Security Logs" database to review available table names in the example data.
 
 
 ******************************
