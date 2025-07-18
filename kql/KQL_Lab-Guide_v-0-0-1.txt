@@ -184,7 +184,7 @@ database('SecurityLogs').table('Email')
 
 This returns more appropriately named columns in our KQL results. The "project-rename" operator lets us rename one or more columns to suit our data or personal preferences. The "project-away" lets us hide a column(s) from the returned query results.
 
-NOTES: Unlike many operators KQL does not like dashes in the column names, which is why underscores were used instead. Column names must be unique, which we chose "username" instead of "recipient", since the "recipient" column name already existed in our database table.
+NOTES: Unlike many operators KQL does not like dashes in the column names, which is why underscores were used instead. Column names must be unique, which is why we chose "username" instead of "recipient", since the "recipient" column name already existed in our database table.
 
 
 ******************************
