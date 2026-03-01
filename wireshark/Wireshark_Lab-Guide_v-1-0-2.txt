@@ -312,3 +312,7 @@ NOTE: The steps covered in the "Ethereal (packet sniffer)" section are still app
 https://www.ida.liu.se/~TDTS04/labs/2019/Wireshark_HTTP/default.html
 & "Computer Networking: A Top-Down Approach", (8th edition) free eBook
 https://gaia.cs.umass.edu/kurose_ross/wireshark.php
+
+Other Exercises, Tranining, and Sample Packet Captures
+Created by: Bradley Duncan
+https://malware-traffic-analysis.net/
