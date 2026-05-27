@@ -497,7 +497,7 @@ Add "Parse QR Code" to the Operations panel.
 
 Click on the "BAKE!" button.
 
-Reveal the embedded contents contained within the Output panel, https://<insertOwnRickRollHere>
+Reveal the embedded contents contained within the Output panel, "https://<insertOwnRickRollHere>"
 
 NOTE: The QR code could be used to obfuscate malicious URLs or other malicious code.
 
