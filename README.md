@@ -10,4 +10,4 @@
 [Wireshark](https://github.com/cerkah/workshops/tree/b9a6a5181a433088839fb4de96bc98887d6feeab/wireshark)<br><br>
 
 > [!NOTE]
-> Workshops are approximately 2 hours each. The lab guide is the included text (.txt) file
+> Workshops are approximately 2 hours each. The lab guide is the included text (.txt) file.
