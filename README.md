@@ -1,5 +1,5 @@
 ![The InfoSec Rock Star](https://raw.githubusercontent.com/cerkah/assets/refs/heads/main/images/Matt-Scheurer-RS_400x400.jpg)<br>
-## WMatt Scheurer (DFIRMatt) Workshops
+## Matt Scheurer (DFIRMatt) Workshops
 
 [CyberChef Workshop](https://github.com/cerkah/workshops/tree/b9a6a5181a433088839fb4de96bc98887d6feeab/cyberchef)
 
@@ -9,5 +9,5 @@
 
 [Wireshark](https://github.com/cerkah/workshops/tree/b9a6a5181a433088839fb4de96bc98887d6feeab/wireshark)
 
-[!NOTE]
-Workshops are approximately 2 hours each. The lab guide is always the text (.txt) file!
+> [!NOTE]
+> Workshops are approximately 2 hours each. The lab guide is always the text (.txt) file!
